@@ -1,5 +1,7 @@
 # Micro_Controller
 
-Implement a micro controller project using C and illustrate it in proteus
+Implement a Digital Clock and Lock which, open the door when inputed the password
 
-design a clock using ISR in AVR-Atmega32 and keyboard interface, all illustrated in Proteus.
+implemented in atmega32 using atmega and simulated in proteus.
+
+using Interrupt, keypad and seven segment.
