@@ -22,11 +22,7 @@ int length = 10;
 
 typedef struct {
 	char pass[3];  // Array to hold 2 characters + null terminator
-<<<<<<< HEAD
 	char timestamp[4];  // Array to hold the time string (HHMMSS + null terminator)
-=======
-	char timestamp[4];  // Array to hold the time string (HH:MM:SS + null terminator)
->>>>>>> refs/remotes/origin/main
 } Entry;
 
 Entry logs[100];
@@ -51,14 +47,9 @@ void init_interrupts(){
 	TCCR1A = 0;
 	TCCR1B = 0;
 	TCCR1B |= (1 << WGM12);
-<<<<<<< HEAD
 	OCR1A = 12625;
 	//12500
 	//OCR1A = 125;
-=======
-	//OCR1A = 15625;
-	OCR1A = 12500;
->>>>>>> refs/remotes/origin/main
 	TIMSK |= (1 << OCIE1A);
 	TCCR1B |= (1 << CS11) | (1 << CS10);
 	sei();
@@ -98,10 +89,6 @@ char scan_keypad() {
 int verify_password(char pass[2]){
 	for (int i = 0; i<length;i++)
 	{
-<<<<<<< HEAD
-=======
-		printf("password[%d] is %s",i, passwords[i]);
->>>>>>> refs/remotes/origin/main
 		if (pass[0] == passwords[i][0] && pass[1] == passwords[i][1])
 		{
 			return 1;
@@ -114,20 +101,12 @@ void flaging(char hex, bool all){
 	if (all)
 	{
 		PORTA = hex; PORTB = hex; PORTD = hex;
-<<<<<<< HEAD
 		_delay_ms(900);
-=======
-		_delay_ms(600);
->>>>>>> refs/remotes/origin/main
 		PORTA = 0; PORTB = 0; PORTD = 0;
 	}
 	else{
 		PORTA = hex;
-<<<<<<< HEAD
 		_delay_ms(900);
-=======
-		_delay_ms(600);
->>>>>>> refs/remotes/origin/main
 		PORTA = 0;
 	}
 }
@@ -136,7 +115,6 @@ void log_record(int hour_t, int minute_t, int second_t) {
 	// password
 	logs[logs_ctr].pass[0] = PORTB; logs[logs_ctr].pass[1] = PORTD; logs[logs_ctr].pass[2] = '\0';
 	/*
-<<<<<<< HEAD
     time_t raw_time;
     struct tm *time_info;
 	// Get the current time
@@ -145,11 +123,6 @@ void log_record(int hour_t, int minute_t, int second_t) {
 	// Convert the time to local time
 	time_info = localtime(&raw_time);
 	//strftime(logs[logs_ctr].timestamp, sizeof(logs[logs_ctr].timestamp), "%H%M%S", t);
-=======
-	time_t now = time(NULL);
-	struct tm *t = localtime(&now);
-	strftime(logs[logs_ctr].timestamp, sizeof(logs[logs_ctr].timestamp), "%H%M%S", t);
->>>>>>> refs/remotes/origin/main
 	*/
 	logs[logs_ctr].timestamp[0] = hour_t %256;
 	logs[logs_ctr].timestamp[1] = minute_t %256;
@@ -166,14 +139,9 @@ bool log_command(char pass[2]){
 }
 
 bool verify_log(){
-<<<<<<< HEAD
 	if ( logs_ctr> 1 && logs[logs_ctr-1].pass[0] == 0x11 && logs[logs_ctr-1].pass[1] == 0x11){
 		return true;
 	}
-=======
-	if (logs[logs_ctr-1].pass[0] == 0x11 && logs[logs_ctr-1].pass[1] == 0x11)
-		return true;
->>>>>>> refs/remotes/origin/main
 	return false;
 }
 
@@ -191,7 +159,6 @@ void display_log(){
 		PORTB = logs[i].pass[0];
 		PORTD = logs[i].pass[1];
 		_delay_ms(2000);
-<<<<<<< HEAD
 		
 if(i < (logs_ctr-1)){
 PORTA = 0x88;
@@ -203,11 +170,6 @@ else{
 	PORTB = 0x11;
 	PORTD = 0x55;
 }
-=======
-		PORTA = 0x88;
-		PORTB = 0x88;
-		PORTD = 0x88;
->>>>>>> refs/remotes/origin/main
 		_delay_ms(1000);
 		
 		
@@ -219,11 +181,7 @@ bool set_password(){
 	char new_pass[2];
 	new_pass[0] = PORTB;
 	new_pass[1] = PORTD;
-<<<<<<< HEAD
 	//passwords[length][1] = PORTD;
-=======
-	passwords[length][1] = PORTD;
->>>>>>> refs/remotes/origin/main
 	for (int i =0;i<length;i++)
 	{
 		if ((passwords[i][0] == new_pass[0]) && (passwords[i][1] == new_pass[1]))
@@ -316,19 +274,12 @@ int main(void) {
 				pass[1] = PORTD; // Assume PORTD holds the lower byte
 				if (log_command(pass))
 				{
-<<<<<<< HEAD
 					if(verify_log()){
 						display_log();
 					}
 					else{
 						flaging(0xCC,true);
 					}
-=======
-					if(verify_log())
-						display_log();
-					else
-						flaging(0xCC,true);
->>>>>>> refs/remotes/origin/main
 					password_time = false;
 					init_password = -1;
 					
@@ -336,13 +287,8 @@ int main(void) {
 				else{
 					if (verify_password(pass)){
 						PORTA |= 1; // Turn on PORTB pin 0 if password is verified
-<<<<<<< HEAD
 						log_record(time_hour, time_minute, time_second);
 						_delay_ms(500);
-=======
-						_delay_ms(500);
-						log_record(time_hour, time_minute, time_second);
->>>>>>> refs/remotes/origin/main
 					}
 					else{
 						PORTB = 0;
