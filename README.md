@@ -1,4 +1,4 @@
-# Micro_Controller
+# Micro_Controllers
 
 - Implement a Digital Clock with inner lock system which, opens the door when inputed the correct password
 
